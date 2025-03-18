@@ -16,7 +16,7 @@ class HandProcessing:
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(self.mode, self.max_hands, self.complexity, self.conf_deteccion, self.conf_tracking)
         self.draw = mp.solutions.drawing_utils
-        self.tip = [4, 8, 12, 16, 20]
+        self.tip = [4, 8, 12, 16, 20]  #configuracion de mediapipe
 
     def find_hands(self, frame: np.ndarray, draw: bool = True) -> np.ndarray:
         img_color = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -51,7 +51,7 @@ class HandProcessing:
             bbox = xmin, ymin, xmax, ymax
             if draw_box:
                 cv2.rectangle(frame, (xmin - 20, ymin - 20), (xmax + 20, ymax + 20), color, 2)
-        return hands_list, bbox
+        return hands_list, bbox  #hands_list: coordenadas de los puntos claves de las manos, bbox: coordenadas de rectangulo de deteccio de la mano
 
     def fingers_up(self, keypoints_list: List[List[int]]) -> List[int]:
         fingers: List[int] = []
@@ -66,7 +66,7 @@ class HandProcessing:
             else:
                 fingers.append(0)
 
-        return fingers
+        return fingers #metodo para saber que dedos de la mano estan levantados
 
     def distance(self, p1: int, p2: int, frame: np.ndarray, draw: bool = True, radio: int = 15, thickness: int = 3) -> \
             Tuple[float, np.ndarray, list]:

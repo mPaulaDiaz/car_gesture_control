@@ -12,11 +12,11 @@ class GestureDetector:
 
     def fingers_interpretation(self, fingers_up: List[int]) -> str:
         commands = {
-            (0, 0, 0, 0, 0): 'A',
-            (1, 1, 1, 1, 1): 'P',
-            (1, 0, 0, 0, 0): 'I',
-            (0, 0, 0, 0, 1): 'D',
-            (1, 0, 0, 0, 1): 'R',
+            (0, 0, 0, 0, 0): 'F', #Forward
+            (1, 1, 1, 1, 1): 'S', #Stop
+            (1, 0, 0, 0, 0): 'L', #Left
+            (0, 0, 0, 0, 1): 'R', #Right
+            #(1, 0, 0, 0, 1): 'R',
 
         }
         return commands.get(tuple(fingers_up), "")
@@ -27,11 +27,12 @@ class GestureDetector:
         hand_list, bbox = self.hand_detector.find_position(frame, draw_box=False)
         if len(hand_list) == 21:
             fingers_up = self.hand_detector.fingers_up(hand_list)
+            print(fingers_up)
             command = self.fingers_interpretation(fingers_up)
             frame = self.draw.draw_actions(command, frame)
             return command, frame
         else:
-            return "P", frame
+            return "S", frame
 
 
 
